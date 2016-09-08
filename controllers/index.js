@@ -4,3 +4,4 @@
 exports.user = require('./user');
 exports.home = require('./home');
 exports.static = require('./static');
+exports.auth = require('./auth')
