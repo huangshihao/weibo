@@ -1,7 +1,7 @@
 /**
  * Created by howe on 16/9/6.
  */
-var http =  require('http');
+var http = require('http');
 var parseUrl = require('url').parse;
 var controllers = require('./controllers');
 
