@@ -4,9 +4,16 @@
 const sendFile = require('../utils/send').sendFile;
 const joinPath = require('path').join
 const publicPath = joinPath(__dirname,'../public');
-module.exports = function(req, res){
+const uploadPath = joinPath(__dirname,'../data/upload');
+var exports = module.exports = function(req, res){
     var path = req.params[1];
     path = joinPath(publicPath,path);
     sendFile(path,res);
 
+}
+
+exports.upload = function(req, res){
+    var path = req.params[1];
+    path = joinPath(uploadPath,path);
+    sendFile(path,res);
 }

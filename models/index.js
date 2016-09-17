@@ -7,5 +7,5 @@ const UserModel = require('./user');
 
 const memStore = new MemStore();
 
-const user = new UserModel(memStore);
-const token = new BaseModel(memStore,'token:')
+exports.user = new UserModel(memStore);
+exports.token = new BaseModel(memStore,'token:')
