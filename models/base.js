@@ -4,7 +4,7 @@
 const send = require('../utils/send');
 
 
-class BaseModel(){
+class BaseModel{
     constructor(store,prefix){
         this.store = store;
         this.prefix = prefix

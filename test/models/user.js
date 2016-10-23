@@ -1,32 +1,41 @@
 /**
  * Created by howe on 16/9/9.
  */
-const assert = require('assert');
-const runner = require('../runner')
-const MemStore = require('../../store/memstore');
+const expect = require('chai').expect;
+const {MongoClient} = require('mongodb')
 const UserModel = require('../../models/user')
 
-const store = new MemStore()
-const model = new UserModel(store)
+const model = new UserModel()
 
-describe('UserModel',function(){
-    it('用户通过邮编创建获取用户信息',testEmail)
-})
-
-function testEmail(done){
-    const testUser = {
-        email:'tom@tst.com',
-        nickname:'Tom',
-        password:'1234'
-    }
-    model.create(testUser,function(err){
-        assert(!err);
-        model.getByEmail('tom@tst.com',function(err,user){
-            assert(!err)
-            assert(testUser.email,user.email)
-            assert(testUser.nickname,user.nickname)
-            assert(testUser.password,user.password)
-            done()
-        })
+describe('UserModel',() => {
+    before(async () => {
+        const db = await MongoClient.connect('mongodb://localhost/testdb')
+        model.init(db.collection('user'))
     })
-}
+    it('用户通过邮编创建获取用户信息',async () => {
+        const testUser = {
+            email:'tom@qq.com',
+            nickname:'Tom',
+            password:'1234'
+        }
+        const id = await model.create(testUser)
+        const user  = await model.getByEmail('tom@qq.com')
+        expect(user.email).to.be.equal(testUser.email)
+        expect(user.nickname).to.be.equal(testUser.nickname)
+        expect(user.password).to.be.equal(testUser.password)
+    })
+    it('相同的邮箱不能保存两次',async () => {
+        try{
+            const testUser = {
+                email:'tom@tst.com',
+                nickname:'Tom',
+                password:'1234'
+            }
+            await model.create(testUser)
+            await model.create(testUser)
+        }catch (e){
+            return
+        }
+        expect.fail()
+    })
+})

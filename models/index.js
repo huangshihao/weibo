@@ -1,11 +1,13 @@
 /**
  * Created by howe on 16/9/10.
  */
-const MemStore = require('../store/memstore');
-const BaseModel = require('./base');
+const {MongoClient} = require('mongodb');
 const UserModel = require('./user');
 
-const memStore = new MemStore();
+exports.user = new UserModel()
 
-exports.user = new UserModel(memStore);
-exports.token = new BaseModel(memStore,'token:')
+MongoClient.connect('mongodb://localhost/easysns')
+    .then(db => {
+        exports.user.init(db.collection('user'))
+    })
+

@@ -2,7 +2,7 @@
  * Created by howe on 16/9/9.
  */
 
-class MemStore(){
+class MemStore{
     constructor(){
         this.map = {}
     }
@@ -13,7 +13,7 @@ class MemStore(){
         return this.map[key]
     }
     async del(key){
-        delete this.map(key)
+        delete this.map[key]
     }
     async incr(key){
         var value = await this.get(key)
