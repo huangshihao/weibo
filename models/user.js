@@ -2,14 +2,28 @@
  * Created by howe on 16/9/9.
  */
 var BaseModel = require('./base');
+const PREFIX_EMAIL_TO_ID = 'email-id:';
 
-function UserModel(store){
-    BaseModel.call(this,store,'user:')
+
+class UserModel extends BaseModel{
+    constructor(store){
+        super(store,'user:')
+    }
+    create(obj){
+        return super.create(obj).then((id) => {
+            return this.store.set(PREFIX_EMAIL_TO_ID + obj.email, id).then(() => id)
+        })
+    }
+    async getByEmail(email){
+        const id = await this.store.get(PREFIX_EMAIL_TO_ID + email)
+        return await this.get(id)
+    }
 }
+
+
 
 module.exports = UserModel;
 
-const PREFIX_EMAIL_TO_ID = 'email-id:';
 
 Object.assign(UserModel.prototype,BaseModel.prototype,{
     create:function(obj,callback){
