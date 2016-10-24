@@ -4,7 +4,7 @@
 const models = require('../models');
 const multiparty = require('multiparty');
 const joinPath = require('path').join;
-const uploadDir = joinPath(__dirname + '../data/upload')
+const uploadDir = joinPath(__dirname , '../data/upload')
 
 const parseMultipart = (req, opts) => new Promise((resolve, reject) => {
     const form = new multiparty.Form(opts)
