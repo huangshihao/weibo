@@ -1,16 +1,5 @@
 /* global API UI alert */
 ;(function () {
-  // register()
-  // login()
-  logout()
-  currentUser()
-  publish()
-  editAvatar()
-  uploadAvatar()
-  getTimeline()
-  getNewUsers()
-  loadmore()
-
   /*
   // 注册
   function register () {
@@ -55,7 +44,7 @@
         if (err) {
           alert('注销失败')
         } else {
-          window.location.href = './reglog.html'
+          window.location.href = '/'
         }
       })
     })
@@ -64,7 +53,7 @@
   function currentUser () {
     API.getCurrentUser(function (err, data) {
       if (err) {
-        alert('获取信息失败')
+        console.error(err)
       } else {
         $('#naviNickName').html('<a href="#">' + data.nickname + '</a>')
         $('#naviAvatar').find('img').attr('src', data.avatar)
@@ -146,10 +135,10 @@
   function getTimeline () {
     API.getTimeline(page, limit, function (err, data) {
       if (err) {
-        alert('获取失败')
+        console.error('获取失败')
       } else {
         data.forEach(function (item) {
-          UI.addContent(item)
+          UI.addContent(item, true)
         })
       }
     })
@@ -167,13 +156,24 @@
   function getNewUsers () {
     API.getNewUsers({}, function (err, data) {
       if (err) {
-        alert('获取失败')
+        console.error(err)
       } else {
         data.forEach(function (item) {
-          UI.addUser(item)
+          UI.addUser(item, true)
         })
+        follow()
       }
     })
-    follow()
   }
+
+  // register()
+  // login()
+  logout()
+  currentUser()
+  publish()
+  editAvatar()
+  uploadAvatar()
+  getTimeline()
+  getNewUsers()
+  loadmore()
 })()

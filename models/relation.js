@@ -9,7 +9,7 @@ class RelationModel{
         this.redis = redis
     }
     //userid 关注 touserid
-    fllow (userId, toUserId){
+    follow (userId, toUserId){
         return this.redis.multi([
             ['ZADD', KEY_FOLLOWINGS + userId, Date.now(), toUserId],
             ['ZADD', KEY_FOLLOWERS + toUserId, Date.now(), userId]
@@ -42,10 +42,10 @@ class RelationModel{
     }
 
     listFollowers (userId, pageNum = 1, pageSize = 100){
-        return this.redis.zrevrange(KEY_FOLLOWERS + user,(pageNum - 1)*pageSize, pageNum*pageSize)
+        return this.redis.zrevrange(KEY_FOLLOWERS + userId,(pageNum - 1)*pageSize, pageNum*pageSize)
     }
     listFollowIngs (userId, pageNum = 1, pageSize = 100){
-        return this.redis.zrevrange(KEY_FOLLOWINGS + user,(pageNum - 1)*pageSize, pageNum*pageSize)
+        return this.redis.zrevrange(KEY_FOLLOWINGS + userId,(pageNum - 1)*pageSize, pageNum*pageSize)
     }
 }
 

@@ -23,12 +23,12 @@ class UserService {
         return {
             _id:userId,
             nickname:user.nickname,
-            avatar:user.avatar || '/static/img/nodejs.png'
+            avatar:user.avatar || '/static/img/nodejs.png',
             isFollowing: isFollowing
         }
     }
     normalizedList(users,selfUserId){
-        return Promise.all(users.mpa(user => this.normalized(user, selfUserId)))
+        return Promise.all(users.map(user => this.normalized(user, selfUserId)))
     }
 }
 module.exports = UserService

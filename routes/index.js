@@ -2,18 +2,14 @@
  * Created by howe on 2016/10/23.
  */
 const router = require('koa-router')()
-//const Auth = require('./auth')
-//const User = require('./user')
 
 exports.router = router
 
 function useRoute(name){
     const rt = require(`./${name}`)
-    router.use('./${name}',rt.routes(),rt.allowedMethods())
+    router.use(`/${name}`,rt.routes(),rt.allowedMethods())
 }
 ;['auth', 'user', 'users', 'rel', 'activities'].forEach(useRoute)
-//router.use('/auth',Auth.routes(),Auth.allowedMethods())
-//router.use('/user',User.routes(),User.allowedMethods())
 
 
 

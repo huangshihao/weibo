@@ -3,7 +3,7 @@
  */
 const {MongoClient} = require('mongodb');
 const redis = require('redis')
-const redisWrapper = require('koa-redis')
+const redisWrapper = require('co-redis')
 
 const redisClient = redis.createClient('redis://localhost:6379')
 const redisCo = redisWrapper(redisClient)
@@ -22,6 +22,7 @@ exports.timeline = new TimelineModel(redisCo)
 MongoClient.connect('mongodb://localhost/easysns')
     .then(db => {
         exports.user.init(db.collection('user'))
+        exports.activity.init(db.collection('activity'))
 
     })
 
